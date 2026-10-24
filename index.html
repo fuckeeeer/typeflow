@@ -1,0 +1,396 @@
+    <!DOCTYPE html>
+    <html lang="ru">
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>TypeFlow — тест скорости печати</title>
+
+    <link rel="stylesheet" href="style.css">
+      <script src="texts.js" defer></script>
+      <script src="script.js" defer></script>
+    </head>
+
+    <body>
+    <div class="ambient ambient-purple" aria-hidden="true"></div>
+    <div class="ambient ambient-cyan" aria-hidden="true"></div>
+
+    <div class="page">
+        <header class="header">
+        <a class="logo" href="./" aria-label="TypeFlow — главная">
+            <span class="logo-icon" aria-hidden="true">⌘</span>
+            <span>type<span class="logo-accent">flow</span></span>
+        </a>
+
+        <span class="header-label">ТВОЙ РИТМ. ТВОЯ СКОРОСТЬ.</span>
+
+        <span class="version">BETA 01</span>
+        </header>
+
+        <main>
+        <section class="intro">
+            <div class="eyebrow">
+            <span class="status-dot" aria-hidden="true"></span>
+            ПРОСТРАНСТВО ДЛЯ ПРАКТИКИ
+            </div>
+
+            <h1>Поймай свой <span>поток.</span></h1>
+
+            <p class="intro-description">
+            Оставь лишнее за экраном. Только ты, клавиатура и ритм.
+            </p>
+        </section>
+
+              <div class="mode-picker">
+        <p class="mode-picker-caption">ВЫБЕРИ СВОЙ РЕЖИМ</p>
+
+        <div
+          id="mode-switch"
+          class="mode-switch"
+          role="group"
+          aria-label="Режим печати"
+        >
+          <span class="mode-slider" aria-hidden="true"></span>
+
+          <button
+            class="mode-button selected"
+            type="button"
+            data-mode="words"
+            aria-pressed="true"
+          >
+            <span class="mode-button-title">Слова</span>
+            <span class="mode-button-description">Свободный ритм</span>
+          </button>
+
+          <button
+            class="mode-button"
+            type="button"
+            data-mode="text"
+            aria-pressed="false"
+          >
+            <span class="mode-button-title">Текст</span>
+            <span class="mode-button-description">Живая пунктуация</span>
+          </button>
+        </div>
+      </div>
+            <div id="difficulty-panel" class="difficulty-panel" hidden>
+        <span id="difficulty-label" class="difficulty-label">
+          Сложность
+        </span>
+
+        <div
+          class="difficulty-options"
+          role="group"
+          aria-labelledby="difficulty-label"
+        >
+          <button
+            class="difficulty-button selected"
+            type="button"
+            data-difficulty="easy"
+            aria-pressed="true"
+          >
+            <span class="difficulty-dot" aria-hidden="true"></span>
+            Простой
+          </button>
+
+          <button
+            class="difficulty-button"
+            type="button"
+            data-difficulty="medium"
+            aria-pressed="false"
+          >
+            <span class="difficulty-dot" aria-hidden="true"></span>
+            Средний
+          </button>
+
+          <button
+            class="difficulty-button"
+            type="button"
+            data-difficulty="hard"
+            aria-pressed="false"
+          >
+            <span class="difficulty-dot" aria-hidden="true"></span>
+            Сложный
+          </button>
+        </div>
+
+        <p id="difficulty-description" class="difficulty-description">
+          Спокойный старт: заглавные буквы, точки и запятые.
+        </p>
+      </div>  
+      <section class="test-card" aria-label="Тест скорости печати">
+            <div class="toolbar">
+            <div class="mode-label">
+                <span aria-hidden="true">◷</span>
+                На время
+            </div>
+
+          <div
+            class="duration-options"
+            role="group"
+            aria-label="Длительность теста"
+          >
+            <button
+              class="duration"
+              type="button"
+              data-time="15"
+              aria-label="15 секунд"
+              aria-pressed="false"
+            >
+              15 <span class="time-unit">с</span>
+            </button>
+
+            <button
+              class="duration active"
+              type="button"
+              data-time="30"
+              aria-label="30 секунд"
+              aria-pressed="true"
+            >
+              30 <span class="time-unit">с</span>
+            </button>
+
+            <button
+              class="duration"
+              type="button"
+              data-time="60"
+              aria-label="60 секунд"
+              aria-pressed="false"
+            >
+              60 <span class="time-unit">с</span>
+            </button>
+          </div>
+
+            <div
+              class="language-switch"
+              role="group"
+              aria-label="Язык задания"
+            >
+              <button
+                class="language-button selected"
+                type="button"
+                data-language="ru"
+                aria-label="Русский"
+                aria-pressed="true"
+              >
+                RU
+              </button>
+
+              <button
+                class="language-button"
+                type="button"
+                data-language="en"
+                aria-label="Английский"
+                aria-pressed="false"
+              >
+                EN
+              </button>
+            </div>
+            </div>
+
+            <div class="stats">
+            <div class="stat">
+                <span class="stat-label">СКОРОСТЬ</span>
+                <div class="stat-value">
+                <span id="wpm">0</span>
+                <span class="unit">wpm</span>
+                </div>
+            </div>
+
+            <div class="stat">
+                <span class="stat-label">ТОЧНОСТЬ</span>
+                <div class="stat-value">
+                <span id="accuracy">100</span>
+                <span class="unit">%</span>
+                </div>
+            </div>
+
+            <div class="stat timer-stat">
+                <span class="stat-label">ОСТАЛОСЬ</span>
+                <div class="stat-value">
+                <span id="timer">30</span>
+                <span class="unit">сек</span>
+                </div>
+            </div>
+            </div>
+
+            <div class="typing-area">
+            <p id="text" class="typing-text">
+                каждый новый день это возможность стать немного лучше
+                найти свой ритм почувствовать движение и продолжить путь
+            </p>
+
+            <label class="input-label" for="typing-input">
+                Начни печатать, чтобы запустить тест
+            </label>
+
+            <input
+                id="typing-input"
+                class="typing-input"
+                type="text"
+                placeholder="Твой поток начинается здесь…"
+                autocomplete="off"
+                autocapitalize="off"
+                spellcheck="false"
+            >
+            </div>
+
+                    <div class="test-footer">
+            <span class="hint">Не спеши. Точность важнее суеты.</span>
+
+            <button id="restart" class="restart-button" type="button">
+                <span aria-hidden="true">↻</span>
+                Заново
+            </button>
+            </div>
+        </section>
+
+        <section
+            id="result"
+            class="result-card"
+            aria-labelledby="result-title"
+            aria-live="polite"
+            hidden
+        >
+            <div class="result-heading">
+            <div>
+                <span class="result-eyebrow">ПОТОК ЗАВЕРШЁН</span>
+                <h2 id="result-title">Твой результат</h2>
+            </div>
+
+            <span class="result-badge">Хорошая практика ↗</span>
+            </div>
+
+            <div class="result-grid">
+            <div class="result-item">
+                <span class="result-label">Скорость</span>
+
+                <div class="result-number">
+                <span id="result-wpm">0</span>
+                <span class="result-unit">WPM</span>
+                </div>
+            </div>
+
+            <div class="result-item">
+                <span class="result-label">Точность</span>
+
+                <div class="result-number">
+                <span id="result-accuracy">100</span>
+                <span class="result-unit">%</span>
+                </div>
+            </div>
+
+            <div class="result-item">
+                <span class="result-label">Правильных символов</span>
+
+                <div class="result-number">
+                <span id="result-correct">0</span>
+                </div>
+            </div>
+
+            <div class="result-item">
+                <span class="result-label">Время теста</span>
+
+                <div class="result-number">
+                <span id="result-duration">30</span>
+                <span class="result-unit">сек</span>
+                </div>
+            </div>
+            </div>
+
+            <p id="result-message" class="result-message"></p>
+
+            <button id="try-again" class="try-again-button" type="button">
+            Ещё один раунд <span aria-hidden="true">↗</span>
+            </button>
+        </section>
+
+              <section class="record-card" aria-labelledby="record-title">
+        <div class="record-info">
+          <span id="record-title" class="record-eyebrow">
+            ЛИЧНЫЙ РЕКОРД
+          </span>
+
+          <p id="record-mode" class="record-mode"></p>
+
+          <p id="record-details" class="record-details">
+            Твой первый рекорд ещё впереди.
+          </p>
+        </div>
+
+        <div class="record-score">
+          <span id="record-value">—</span>
+          <span class="record-unit">WPM</span>
+        </div>
+
+        <p
+          id="record-notice"
+          class="record-notice"
+          role="status"
+          hidden
+        ></p>
+      </section>
+      
+        <div class="bottom-note">
+            <span class="note-line" aria-hidden="true"></span>
+            МАЛЕНЬКАЯ ПРАКТИКА. БОЛЬШОЙ ПРОГРЕСС.
+            <span class="note-line" aria-hidden="true"></span>
+        </div>
+        </main>
+
+        <footer class="footer">
+        <span>TypeFlow © 2026</span>
+        <span>Создано для состояния потока</span>
+        </footer>
+    </div>
+        <dialog
+      id="record-modal"
+      class="record-modal"
+      aria-labelledby="record-modal-title"
+      aria-describedby="record-modal-message"
+    >
+      <div class="record-modal-content">
+        <button
+          id="record-modal-close"
+          class="record-modal-close"
+          type="button"
+          aria-label="Закрыть поздравление"
+          autofocus
+        >
+          ×
+        </button>
+
+        <div class="record-modal-symbol" aria-hidden="true">✦</div>
+
+        <span class="record-modal-eyebrow">ТВОЙ НОВЫЙ УРОВЕНЬ</span>
+
+        <h2 id="record-modal-title">Новый рекорд!</h2>
+
+        <p id="record-modal-mode" class="record-modal-mode"></p>
+
+        <div class="record-modal-score">
+          <span id="record-modal-wpm">0</span>
+          <span>WPM</span>
+        </div>
+
+        <span id="record-modal-gain" class="record-modal-gain"></span>
+
+        <p id="record-modal-message" class="record-modal-message">
+          Отличная работа! Ты поймал свой ритм.
+          Продолжай практиковаться — следующий рекорд впереди.
+        </p>
+
+        <p id="record-modal-storage" class="record-modal-storage" hidden></p>
+
+        <button
+          id="record-modal-continue"
+          class="record-modal-continue"
+          type="button"
+        >
+          Класс! Посмотреть результат
+          <span aria-hidden="true">↗</span>
+        </button>
+      </div>
+    </dialog>
+    </body>
+    </html>
