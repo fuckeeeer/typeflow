@@ -46,11 +46,18 @@ const els = {
   resultErrors: document.getElementById("result-errors"),
   resultMessage: document.getElementById("result-message"),
   resultBest: document.getElementById("result-best"),
+  resultUpsell: document.getElementById("result-upsell"),
   resultAgain: document.getElementById("result-again"),
 
   unavailable: document.getElementById("lesson-unavailable"),
   unavailableTitle: document.getElementById("unavailable-title"),
-  unavailableText: document.getElementById("unavailable-text")
+  unavailableText: document.getElementById("unavailable-text"),
+
+  paywall: document.getElementById("lesson-paywall"),
+  paywallTitle: document.getElementById("paywall-title"),
+  paywallText: document.getElementById("paywall-text"),
+  paywallBeta: document.getElementById("paywall-beta"),
+  paywallNote: document.getElementById("paywall-note")
 };
 
 const reduceMotion = window.matchMedia(
@@ -107,25 +114,51 @@ function getLessonRecord(id) {
   return record;
 }
 
-// --- Текущий урок ----------------------------------------------------------
+// --- Текущий урок и доступ -------------------------------------------------
 
-// Урок открыт, если он готов и либо бесплатный, либо платный во время беты.
-function isLessonOpen(item) {
-  if (!item || item.status !== "available") return false;
+const BETA_STORAGE_KEY = "typeflow.lessons.beta.v1";
 
-  return item.access === "free" || item.betaOpen === true;
+function isPaidLesson(item) {
+  return Boolean(item && item.access === "paid");
+}
+
+function loadBetaAccess() {
+  try {
+    return localStorage.getItem(BETA_STORAGE_KEY) === "1";
+  } catch {
+    return false;
+  }
+}
+
+function saveBetaAccess() {
+  try {
+    localStorage.setItem(BETA_STORAGE_KEY, "1");
+  } catch {
+    // Приватный режим — доступ останется только на эту сессию.
+  }
+}
+
+let betaUnlocked = loadBetaAccess();
+
+// "free" — открыт, "beta" — платный, но открыт по бете,
+// "paywall" — платный и закрыт, "closed" — урока ещё нет.
+function lessonAccessState(item) {
+  if (!item || item.status !== "available") return "closed";
+  if (!isPaidLesson(item)) return "free";
+  if (betaUnlocked) return "beta";
+
+  return "paywall";
 }
 
 const params = new URLSearchParams(window.location.search);
 const requestedId = params.get("lesson");
-const openLessons = lessons.filter(isLessonOpen);
 
 const lesson = requestedId
   ? lessons.find((item) => item.id === requestedId)
-  : openLessons[0];
+  : lessons[0];
 
 const drills =
-  lesson && isLessonOpen(lesson) && Array.isArray(lesson.drills)
+  lesson && Array.isArray(lesson.drills)
     ? lesson.drills.filter(
         (drill) => Array.isArray(drill.lines) && drill.lines.length > 0
       )
@@ -147,30 +180,34 @@ function createBadge(text, variant) {
 }
 
 function renderCourseStats() {
-  const available = openLessons.length;
-  const completed = openLessons.filter((item) => {
+  const total = lessons.length;
+  const free = lessons.filter((item) => !isPaidLesson(item)).length;
+  const paid = total - free;
+  const completed = lessons.filter((item) => {
     const record = getLessonRecord(item.id);
     return record && record.completed;
   }).length;
 
   els.courseStats.textContent =
-    `${available} из ${lessons.length} уроков доступно · ` +
-    `${completed} пройдено`;
+    `Бесплатно: ${free} · Платно: ${paid} · Пройдено: ${completed}`;
 }
 
 function renderRoadmap() {
   const cards = lessons.map((item) => {
     const record = getLessonRecord(item.id);
-    const isOpen = isLessonOpen(item);
+    const paid = isPaidLesson(item);
+    const beta = paid && betaUnlocked;
+    const isAvailable = item.status === "available";
+    const isOpen = isAvailable && (!paid || betaUnlocked);
     const isCompleted = Boolean(record && record.completed);
     const isActive = lesson && item.id === lesson.id;
 
-    const card = document.createElement(isOpen ? "a" : "div");
+    const card = document.createElement(isAvailable ? "a" : "div");
     card.className = "roadmap-card";
 
-    if (isOpen) {
+    if (isAvailable) {
       card.href = `lessons.html?lesson=${encodeURIComponent(item.id)}`;
-      card.classList.add("is-available");
+      card.classList.add(isOpen ? "is-available" : "is-premium");
     } else {
       card.classList.add("is-locked");
       card.setAttribute("aria-disabled", "true");
@@ -189,8 +226,7 @@ function renderRoadmap() {
     const kicker = document.createElement("span");
     kicker.className = "roadmap-kicker";
     kicker.textContent =
-      `Урок ${item.number} · ` +
-      (item.access === "free" ? "Бесплатно" : "Премиум");
+      `Урок ${item.number} · ` + (paid ? "Премиум" : "Бесплатно");
     body.append(kicker);
 
     const title = document.createElement("h3");
@@ -206,10 +242,8 @@ function renderRoadmap() {
     const footer = document.createElement("div");
     footer.className = "roadmap-footer";
 
-    if (item.status !== "available") {
+    if (!isAvailable) {
       footer.append(createBadge("Скоро", "soon"));
-    } else if (!isOpen) {
-      footer.append(createBadge("Платно", "paid"));
     } else if (isCompleted) {
       const accuracy = Number(record.bestAccuracy);
       footer.append(
@@ -220,12 +254,18 @@ function renderRoadmap() {
           "done"
         )
       );
-    } else {
+    } else if (isOpen) {
       footer.append(createBadge("Доступен", "ready"));
+    } else {
+      footer.append(createBadge("Платно", "paid"));
     }
 
-    if (isOpen && item.access === "paid" && item.betaOpen) {
-      footer.append(createBadge("Премиум · бета", "free"));
+    if (isAvailable && paid) {
+      if (beta) {
+        footer.append(createBadge("Доступ по бете", "free"));
+      } else if (isCompleted) {
+        footer.append(createBadge("Платно", "paid"));
+      }
     }
 
     body.append(footer);
@@ -234,7 +274,7 @@ function renderRoadmap() {
     const arrow = document.createElement("span");
     arrow.className = "roadmap-arrow";
     arrow.setAttribute("aria-hidden", "true");
-    arrow.textContent = isOpen ? "↗" : "⌁";
+    arrow.textContent = isAvailable ? "↗" : "⌁";
     card.append(arrow);
 
     if (isActive) card.setAttribute("aria-current", "page");
@@ -256,11 +296,11 @@ function renderMeta() {
     { text: `${drills.length} упражнения` }
   ];
 
-  if (lesson.access === "paid") {
+  if (isPaidLesson(lesson)) {
     chips.push({ text: "Премиум", variant: "is-paid" });
 
-    if (lesson.betaOpen) {
-      chips.push({ text: "открыт в бете", variant: "is-free" });
+    if (betaUnlocked) {
+      chips.push({ text: "доступ по бете", variant: "is-free" });
     }
   } else {
     chips.push({ text: "Бесплатно", variant: "is-free" });
@@ -396,16 +436,15 @@ function renderTheory() {
 function renderLesson() {
   els.eyebrow.textContent =
     `УРОК ${String(lesson.number).padStart(2, "0")} · ` +
-    (lesson.access === "free" ? "БЕСПЛАТНО" : "ПРЕМИУМ");
+    (isPaidLesson(lesson) ? "ПРЕМИУМ" : "БЕСПЛАТНО");
   els.title.textContent = lesson.title;
   els.summary.textContent = lesson.summary || "";
 
-  if (lesson.access === "paid") {
+  if (isPaidLesson(lesson)) {
     els.accessNote.hidden = false;
-    els.accessNote.textContent = lesson.betaOpen
-      ? "Этот урок относится к будущему платному блоку курса. Пока идёт бета, " +
-        "он открыт всем бесплатно — прогресс сохранится."
-      : "Этот урок входит в платный блок курса.";
+    els.accessNote.textContent =
+      "Доступ по бете: урок входит в платный блок, но открыт бесплатно. " +
+      "Прогресс сохранится.";
   }
 
   renderMeta();
@@ -699,6 +738,18 @@ function renderResult(result, previous) {
     els.resultBest.textContent = "";
   }
 
+  const hasPaidAhead = lessons.some(
+    (item) => isPaidLesson(item) && item.number > lesson.number
+  );
+
+  els.resultUpsell.hidden = !(lesson.access === "free" && hasPaidAhead);
+
+  if (!els.resultUpsell.hidden) {
+    els.resultUpsell.textContent = betaUnlocked
+      ? "Дальше — платные уроки курса. Бета-доступ уже открыт, можно продолжать."
+      : "Дальше — платные уроки курса. Их можно открыть в бете бесплатно.";
+  }
+
   els.result.hidden = false;
   els.result.scrollIntoView({
     behavior: reduceMotion ? "auto" : "smooth",
@@ -786,53 +837,72 @@ function scrollToPractice() {
 
 function showUnavailable() {
   els.view.hidden = true;
+  els.paywall.hidden = true;
   els.unavailable.hidden = false;
-
-  const isPaid = Boolean(
-    lesson && lesson.access === "paid" && !lesson.betaOpen
-  );
 
   const title = lesson
     ? `«${lesson.title}» пока недоступен`
     : "Такого урока пока нет";
 
   els.unavailableTitle.textContent = title;
+  els.unavailableText.textContent = lesson
+    ? "Этот урок ещё не готов: он появится в следующих обновлениях курса. " +
+      "А первый урок уже открыт."
+    : "Проверь адрес страницы или вернись к списку уроков.";
 
-  if (!lesson) {
-    els.unavailableText.textContent =
-      "Проверь адрес страницы или вернись к списку уроков.";
-  } else if (isPaid) {
-    els.unavailableText.textContent =
-      "Этот урок входит в платный блок курса. Оплата пока не подключена — " +
-      "следи за обновлениями. А первые уроки уже открыты.";
-  } else {
-    els.unavailableText.textContent =
-      "Этот урок уже в планах: он появится в следующих обновлениях курса. " +
-      "Начни с первого урока — он уже открыт.";
-  }
+  const firstFree = lessons.find(
+    (item) => item.status === "available" && !isPaidLesson(item)
+  ) || lessons[0];
 
-  const firstOpen = openLessons[0];
   const cta = els.unavailable.querySelector(".try-again-button");
 
-  if (cta && firstOpen) {
-    cta.href = `lessons.html?lesson=${encodeURIComponent(firstOpen.id)}`;
+  if (cta && firstFree) {
+    cta.href = `lessons.html?lesson=${encodeURIComponent(firstFree.id)}`;
   }
 
   document.title = "Урок недоступен — TypeFlow";
 }
 
-function init() {
-  renderRoadmap();
-  renderCourseStats();
+function showPaywall() {
+  els.view.hidden = true;
+  els.unavailable.hidden = true;
+  els.paywall.hidden = false;
 
-  els.courseNote.textContent = course.note || "";
+  els.paywallTitle.textContent = `«${lesson.title}» — платный урок`;
 
-  if (!lesson || !isLessonOpen(lesson) || drills.length === 0) {
-    showUnavailable();
-    return;
-  }
+  els.paywallText.textContent = course.betaAccess
+    ? "Первый урок курса бесплатный, остальные входят в платный блок. " +
+      "Оплату добавим в следующем обновлении. Пока доступ можно открыть " +
+      "в бете — прогресс сохранится."
+    : "Первый урок курса бесплатный, остальные входят в платный блок. " +
+      "Оплата пока не подключена — следи за обновлениями.";
+
+  els.paywallBeta.hidden = !course.betaAccess;
+
+  els.paywallNote.textContent = course.betaAccess
+    ? "Оплата появится в следующем обновлении. Бета-доступ открывает все платные уроки бесплатно — прогресс сохранится."
+    : "Оплата пока не подключена — следи за обновлениями.";
+
+  document.title = `${lesson.title} — платный урок TypeFlow`;
+
+  els.paywall.scrollIntoView({
+    behavior: reduceMotion ? "auto" : "smooth",
+    block: "center"
+  });
+}
+
+let lessonViewStarted = false;
+
+function startLessonView() {
+  els.paywall.hidden = true;
+  els.unavailable.hidden = true;
+  els.view.hidden = false;
 
   renderLesson();
+
+  if (lessonViewStarted) return;
+
+  lessonViewStarted = true;
 
   els.input.addEventListener("input", handleInput);
   els.input.addEventListener("paste", (event) => event.preventDefault());
@@ -855,5 +925,36 @@ function init() {
 
   loadLine();
 }
+
+function unlockBeta() {
+  betaUnlocked = true;
+  saveBetaAccess();
+
+  renderRoadmap();
+  renderCourseStats();
+
+  startLessonView();
+}
+
+function init() {
+  renderRoadmap();
+  renderCourseStats();
+
+  els.courseNote.textContent = course.note || "";
+
+  if (!lesson || lesson.status !== "available" || drills.length === 0) {
+    showUnavailable();
+    return;
+  }
+
+  if (lessonAccessState(lesson) === "paywall") {
+    showPaywall();
+    return;
+  }
+
+  startLessonView();
+}
+
+els.paywallBeta.addEventListener("click", unlockBeta);
 
 init();

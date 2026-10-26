@@ -45,8 +45,9 @@
       <h1>Печатай <span>вслепую.</span></h1>
 
       <p class="intro-description">
-        Короткие уроки: сначала теория, потом практика на клавиатуре.
-        По одному шагу за раз — от домашнего ряда до ровного ритма.
+        Шесть уроков: от домашнего ряда до цифр и фраз. В каждом — теория
+        и практика на клавиатуре. Первый урок бесплатный, остальные входят
+        в платный блок и пока открыты в бете.
       </p>
     </section>
 
@@ -210,6 +211,7 @@
 
         <p id="result-message" class="result-message"></p>
         <p id="result-best" class="result-best"></p>
+        <p id="result-upsell" class="result-upsell" hidden></p>
 
         <div class="result-actions">
           <button id="result-again" class="try-again-button" type="button">
@@ -219,6 +221,25 @@
           <a class="result-link" href="index.html">В тренажёр</a>
         </div>
       </section>
+    </section>
+
+    <section id="lesson-paywall" class="paywall" aria-labelledby="paywall-title" hidden>
+      <span class="badge badge-paid">ПЛАТНЫЙ УРОК</span>
+
+      <h2 id="paywall-title">Платный урок</h2>
+      <p id="paywall-text" class="paywall-text"></p>
+
+      <div class="paywall-actions">
+        <button id="paywall-beta" class="try-again-button" type="button">
+          Открыть в бете <span aria-hidden="true">↗</span>
+        </button>
+
+        <a class="result-link" href="lessons.html?lesson=home-row">
+          К бесплатному уроку
+        </a>
+      </div>
+
+      <p id="paywall-note" class="paywall-note"></p>
     </section>
 
     <section id="lesson-unavailable" class="lesson-unavailable" hidden>
