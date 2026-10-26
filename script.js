@@ -48,7 +48,10 @@ const wordLibraries = {
     "тепло", "радость", "сила", "знание", "вопрос", "ответ",
     "начало", "будущее", "пространство", "возможность",
     "внимание", "практика", "скорость", "точность", "успех",
-    "каждый", "сегодня", "завтра", "вместе", "вперёд"
+    "каждый", "сегодня", "завтра", "вместе", "вперёд",
+    "берег", "письмо", "лампа", "зима", "весна", "карта",
+    "море", "тетрадь", "погода", "проект", "минута",
+    "разговор", "интерес", "опыт", "план"
   ],
 
   en: [
@@ -61,7 +64,9 @@ const wordLibraries = {
     "begin", "future", "space", "chance", "focus", "practice",
     "speed", "careful", "success", "every", "today", "tomorrow",
     "together", "forward", "garden", "forest", "river", "walk",
-    "small", "quiet", "coffee", "friend", "work", "travel"
+    "small", "quiet", "coffee", "friend", "work", "travel",
+    "bridge", "market", "photo", "winter", "summer", "spring",
+    "pencil", "island", "traffic", "weekend"
   ]
 };
 
@@ -93,7 +98,6 @@ let correctAttempts = 0;
 let errorCount = 0;
 let completedCorrect = 0;
 let completedPassages = 0;
-let previousTextIndex = -1;
 
 let resultErrors = document.getElementById("result-errors");
 
@@ -135,43 +139,139 @@ try {
   recordStorageAvailable = false;
 }
 
+// --- Случайная выдача заданий -------------------------------------------
+// Простой random() даёт повторы: один и тот же текст может выпасть дважды
+// подряд, а короткие пулы успевают «залипнуть». Поэтому используем «мешок»:
+// коллекция перемешивается, элементы выдаются по одному и не повторяются,
+// пока не закончится весь набор. Дальше мешок перемешивается заново.
+
+function shuffleInPlace(items) {
+  for (let i = items.length - 1; i > 0; i -= 1) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [items[i], items[j]] = [items[j], items[i]];
+  }
+
+  return items;
+}
+
+function createShuffleBag(getItems) {
+  let queue = [];
+  let lastItem = null;
+
+  function refill() {
+    queue = shuffleInPlace(getItems().slice());
+
+    // Новый круг не должен начинаться с того же элемента,
+    // на котором закончился предыдущий.
+    if (queue.length > 1 && queue[queue.length - 1] === lastItem) {
+      const index = Math.floor(Math.random() * (queue.length - 1));
+      [queue[queue.length - 1], queue[index]] =
+        [queue[index], queue[queue.length - 1]];
+    }
+  }
+
+  return {
+    next() {
+      if (queue.length === 0) refill();
+
+      const item = queue.pop();
+      lastItem = item;
+
+      return item;
+    }
+  };
+}
+
+const wordBags = new Map();
+const passageBags = new Map();
+
+function getWordBag(language) {
+  if (!wordBags.has(language)) {
+    wordBags.set(
+      language,
+      createShuffleBag(() => wordLibraries[language] || [])
+    );
+  }
+
+  return wordBags.get(language);
+}
+
+function getPassageBag(language, difficulty) {
+  const key = `${language}:${difficulty}`;
+
+  if (!passageBags.has(key)) {
+    passageBags.set(
+      key,
+      createShuffleBag(() => {
+        const library = language === "ru"
+          ? textLibrary
+          : englishTextLibrary;
+
+        return library[difficulty] || [];
+      })
+    );
+  }
+
+  return passageBags.get(key);
+}
+
+// Количество слов в задании зависит от длительности теста.
+function getWordCount() {
+  return Math.min(60, Math.max(20, Math.round(duration)));
+}
+
+function generateWords() {
+  const vocabulary = wordLibraries[selectedLanguage] || [];
+  const bag = getWordBag(selectedLanguage);
+  const count = getWordCount();
+  const wantsUnique = new Set(vocabulary).size >= count;
+
+  const words = [];
+  const used = new Set();
+  const maxDraws = count * 4 + vocabulary.length;
+  let draws = 0;
+
+  while (words.length < count && draws < maxDraws) {
+    draws += 1;
+
+    const word = bag.next();
+
+    if (!word) break;
+
+    // Одно и то же слово не должно стоять рядом...
+    if (word === words[words.length - 1]) continue;
+
+    // ...и, если пула хватает, не должно повторяться внутри попытки.
+    if (wantsUnique && used.has(word)) continue;
+
+    words.push(word);
+    used.add(word);
+  }
+
+  // Страховка на случай слишком маленького словаря.
+  while (words.length < count && vocabulary.length > 0) {
+    words.push(vocabulary[words.length % vocabulary.length]);
+  }
+
+  return words.join(" ");
+}
+
+function generateText() {
+  if (selectedMode === "words") return generateWords();
+
+  const bag = getPassageBag(selectedLanguage, selectedDifficulty);
+  const passage = bag.next();
+
+  // Страховка на случай пустой библиотеки.
+  return passage || "";
+}
+
 function getModeLabel() {
   const language = selectedLanguage.toUpperCase();
 
   return selectedMode === "text"
     ? `${language} · Текст · ${difficultyNames[selectedDifficulty]}`
     : `${language} · Слова`;
-}
-
-function generateText() {
-  if (selectedMode === "words") {
-    const dictionary = wordLibraries[selectedLanguage];
-
-    return Array.from(
-      { length: 30 },
-      () => dictionary[Math.floor(Math.random() * dictionary.length)]
-    ).join(" ");
-  }
-
-  const library = selectedLanguage === "ru"
-    ? textLibrary
-    : englishTextLibrary;
-
-  const collection = library[selectedDifficulty];
-
-  const availableIndexes = collection
-    .map((_, index) => index)
-    .filter((index) => (
-      collection.length === 1 || index !== previousTextIndex
-    ));
-
-  const index = availableIndexes[
-    Math.floor(Math.random() * availableIndexes.length)
-  ];
-
-  previousTextIndex = index;
-
-  return collection[index];
 }
 
 function elapsedSeconds() {
@@ -636,7 +736,6 @@ modeButtons.forEach((button) => {
     const next = button.dataset.mode;
     if (selectedMode === next) return;
     selectedMode = next;
-    previousTextIndex = -1;
     resetTest();
   });
 });
@@ -646,7 +745,6 @@ difficultyButtons.forEach((button) => {
     const next = button.dataset.difficulty;
     if (selectedDifficulty === next) return;
     selectedDifficulty = next;
-    previousTextIndex = -1;
     resetTest();
   });
 });
@@ -656,7 +754,6 @@ languageButtons.forEach((button) => {
     const next = button.dataset.language;
     if (selectedLanguage === next) return;
     selectedLanguage = next;
-    previousTextIndex = -1;
     resetTest();
   });
 });

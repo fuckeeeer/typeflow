@@ -16,7 +16,19 @@ const textLibrary = {
 
 Внутри пахло деревом и свежими страницами. Вдоль стен тянулись полки, у окна стояло мягкое кресло. Хозяйка магазина подняла голову от стола и приветливо кивнула. Она не стала сразу предлагать новинки, и Максим был ей за это благодарен. Ему хотелось немного побродить между полками и самому выбрать историю.
 
-На нижней полке нашёлся сборник рассказов о путешествиях. Максим открыл книгу наугад и прочитал несколько строк. Автор описывал маленькую станцию, ночной поезд и человека, который впервые отправлялся далеко от дома. История показалась знакомой, хотя ничего подобного с Максимом не происходило. Он сел у окна и продолжил читать. Когда за стеклом начал темнеть вечер, решение уже было принято. Из магазина он вышел с книгой и ощущением, что случайный поворот оказался очень удачным.`
+На нижней полке нашёлся сборник рассказов о путешествиях. Максим открыл книгу наугад и прочитал несколько строк. Автор описывал маленькую станцию, ночной поезд и человека, который впервые отправлялся далеко от дома. История показалась знакомой, хотя ничего подобного с Максимом не происходило. Он сел у окна и продолжил читать. Когда за стеклом начал темнеть вечер, решение уже было принято. Из магазина он вышел с книгой и ощущением, что случайный поворот оказался очень удачным.`,
+
+    `Снег пошёл ещё до рассвета. К утру дворы стали белыми, а на тропинках остались узкие следы. Ирина вышла из дома раньше обычного и сразу почувствовала, как тихо стало вокруг. Машины ехали медленно, прохожие шли осторожно, и даже обычный разговор звучал приглушённо.
+
+На остановке она купила горячий чай в маленьком кафе. Продавец сказал, что такой снег бывает редко, и попросил передать привет соседям. Ирина улыбнулась. Ей нравилось, как погода меняет повседневные дела и делает их немного важнее.
+
+До работы оставалось двадцать минут. Она выбрала длинную дорогу через парк, хотя могла пойти напрямик. В парке пахло морозом и хвоей, на скамейках лежали ровные подушки снега. У входа в офис Ирина стряхнула снег с пальто и подумала, что зима начинается хорошо.`,
+
+    `В мастерской пахло краской и деревом. Павел включал лампу над верстаком и доставал из ящика старый стул. Ножки шатались, краска облупилась, но сиденье было крепким. Павел любил такие вещи: они хранили следы времени и заслуживали второй шанс.
+
+Сначала он разобрал стул на части и аккуратно разложил их на столе. Потом почистил дерево, подтянул соединения и заменил одну перекладину. Работа шла спокойно. За окном шумели дети, где-то играла музыка, а в мастерской было тихо и тепло.
+
+Через неделю стул вернулся в кухню. На нём снова стало удобно сидеть, и Павел поставил рядом небольшую лампу. Гости часто спрашивали, откуда такой аккуратный стул. Он отвечал коротко: старый, просто немного терпения.`
   ],
 
   medium: [
@@ -42,7 +54,21 @@ const textLibrary = {
 
 В пятницу Катя вышла из дома раньше обычного. По дороге она зашла в цветочный магазин и купила небольшой букет для классного руководителя. Лиза ждала у входа в кафе. "Ну что, готова?" - спросила она. Из открытой двери уже слышался смех. Катя узнала чей-то голос и неожиданно перестала волноваться.
 
-Первые 10 минут все говорили одновременно. Потом заказали чай, начали вспоминать поездки и смешные случаи. Никто не требовал подробного отчёта о достижениях. Можно было просто сидеть рядом, слушать знакомые истории и удивляться, как быстро возвращается ощущение общей компании. Когда на улице стемнело, расходиться ещё не хотелось.`
+Первые 10 минут все говорили одновременно. Потом заказали чай, начали вспоминать поездки и смешные случаи. Никто не требовал подробного отчёта о достижениях. Можно было просто сидеть рядом, слушать знакомые истории и удивляться, как быстро возвращается ощущение общей компании. Когда на улице стемнело, расходиться ещё не хотелось.`,
+
+    `"Ты уже посмотрел квартиру?" - спросил Андрей, когда они вышли из автобуса. Марина кивнула и показала фотографии на телефоне. "Смотри: третий этаж, окна во двор, до метро 12 минут пешком". Андрей присвистнул: для центра это было почти чудо.
+
+Дом оказался старым, но аккуратным. В подъезде только что закончили ремонт, на стенах висели новые светильники. Хозяйка встретила их у двери и сразу предупредила: "Кухня маленькая, зато окно выходит на яблоню. И да, интернет здесь работает отлично, я проверяла трижды".
+
+Внутри пахло краской и немного кофе. Комната была светлой, пол чуть скрипел, а на подоконнике стояли три кактуса. "А мебель остаётся?" - уточнила Марина. "Стол и шкаф точно остаются", - ответила хозяйка. "Остальное можно обсудить".
+
+Они вышли на улицу и присели на скамейку. "Сколько ты готова ждать, чтобы найти идеальный вариант?" - спросил Андрей. Марина посмотрела на окна третьего этажа. "Ещё 2 или 3 просмотра. Но кажется, я уже почти решила".`,
+
+    `В пятницу утром Лиза получила письмо от организаторов марафона. Старт перенесли на 08:30, а регистрацию обещали закрыть в среду, в 18:00. "Значит, у нас осталось 3 дня", - сказала она и отправила сообщение в общий чат. Ответ пришёл через минуту: "Я в деле, но мне нужна новая обувь".
+
+Вечером они встретились в парке, чтобы пробежать 5 километров. Погода была странной: солнце, ветер и мелкий дождь одновременно. "Если так пойдёт, форму с собой берём?" - пошутил Дима. "Берём, но сначала проверим трассу", - ответила Лиза. Они пробежали круг, сверили время и решили, что темп хороший.
+
+После тренировки сели на скамейку. "У меня вопрос: что будет, если я не смогу закончить?" - тихо спросил Дима. Лиза пожала плечами. "Тогда пройдёшь часть дистанции, и это тоже будет результат. Главное - стартовать". Они договорились встретиться в среду и больше не откладывать регистрацию.`
   ],
 
   hard: [
@@ -68,19 +94,40 @@ const textLibrary = {
 
 "Вот вокруг него и построим эту часть экспозиции", - предложила Вика. На стене разместили фотографии, рядом - короткие воспоминания соседей. Кто-то учился под этим деревом кататься на велосипеде; кто-то ждал друзей перед походом в кино. Обычный двор постепенно превращался в место, где пересекалось множество личных историй.
 
-Перед открытием оставалось проверить подписи, закрепить последние рамки и настроить свет. В 17:50 всё было готово. "А вдруг никто не придёт?" - тихо спросил один из волонтёров. Ответить не успели: у двери уже собрались первые посетители. Среди них была женщина с новым конвертом. "Я, кажется, опоздала... Но у меня тоже есть история".`
+Перед открытием оставалось проверить подписи, закрепить последние рамки и настроить свет. В 17:50 всё было готово. "А вдруг никто не придёт?" - тихо спросил один из волонтёров. Ответить не успели: у двери уже собрались первые посетители. Среди них была женщина с новым конвертом. "Я, кажется, опоздала... Но у меня тоже есть история".`,
+
+    `В среду, 18 октября, около 07:15, в редакции оставались только двое: корректор Пётр Ильич и молодой фотограф Вася (как называли его даже в официальных письмах). Номер сдавали в 11:00, а центральная статья всё ещё не имела названия. "Может, поставим что-нибудь нейтральное?" - предложил Вася, но корректор только вздохнул: нейтральных заголовков в номере было уже три.
+
+Правка шла медленно. Пётр Ильич читал текст вслух, отмечал мелкие ошибки и через каждые десять строк возвращался к началу - привычка, которая раздражала всех, кроме него. "Смотри: здесь запятая стоит не на месте, а здесь её, наоборот, не хватает; в третьем абзаце мы дважды написали одно и то же слово", - говорил он.
+
+В 09:40 пришёл ответ от автора: "Всё согласовал (кроме последнего абзаца), правки внёс, файл обновил". Вася открыл вложение, проверил размер фотографии и облегчённо откинулся на стуле. Оставалось 80 минут; по опыту редакции, этого хватало ровно на одну серьёзную ошибку.
+
+Номер вышел по расписанию. На первой полосе стоял заголовок, который придумали в последние пять минут: "Тишина, в которой слышно город". Пётр Ильич прочитал его дважды, ничего не исправил и впервые за утро улыбнулся: иногда лучшее решение - то, что найдено в спешке, но с вниманием к деталям.`,
+
+    `Инструкция к старому радиоприёмнику (найденная на антресолях) оказалась написана в 1974 году и состояла из 12 страниц, из которых 4 были посвящены правилам безопасности. "Не включайте устройство во влажном помещении; не оставляйте его без присмотра более чем на 2 часа", - предупреждал текст, набранный мелким шрифтом. Дмитрий читал инструкцию как рассказ: в ней чувствовалась другая эпоха.
+
+Приёмник он включал вечером, когда город стихал. Антенна работала плохо, и приходилось двигать её вручную: полметра вправо - и вместо шума появлялась музыка, полметра влево - и снова ничего. "Это не техника виновата, это место такое", - говорил сосед, который заходил послушать новости. Спорить было бессмысленно: оба знали, что дело в приёмнике.
+
+Однажды, в конце ноября (кажется, 27-го числа), Дмитрий поймал передачу о старых городах. Голос диктора звучал так, будто до него было несколько тысяч километров и полвека одновременно. Он слушал до полуночи, а утром записал в блокнот одну фразу: "Хорошая вещь живёт дольше, чем её инструкция".
+
+Приёмник стоит на той же полке и сейчас. Антенну приходится держать рукой - по-другому не работает; зато когда ловится сигнал, в комнате становится тише, чем обычно, и это ощущение стоит и 12 страниц инструкции, и всех вечеров, потраченных на поиск нужной волны.`
   ]
 };
 
-// Каждый абзац становится отдельным заданием.
-for (const level of Object.keys(textLibrary)) {
-  textLibrary[level] = textLibrary[level].flatMap((text) =>
-    text
-      .split(/\n\s*\n/)
+// Каждый абзац становится отдельным заданием: чем больше пул, тем реже
+// попадаются повторы. Одинаковые абзацы убираем, чтобы не тратить на них «мешок».
+function splitIntoPassages(library) {
+  for (const level of Object.keys(library)) {
+    const passages = library[level]
+      .flatMap((text) => text.split(/\n\s*\n/))
       .map((paragraph) => paragraph.trim())
-      .filter(Boolean)
-  );
+      .filter(Boolean);
+
+    library[level] = Array.from(new Set(passages));
+  }
 }
+
+splitIntoPassages(textLibrary);
 
 const englishTextLibrary = {
   easy: [
@@ -88,7 +135,19 @@ const englishTextLibrary = {
 
     `Morning sunlight filled the kitchen. Emma made a cup of tea and opened her notebook. She had a few things to finish before lunch, but there was no need to rush. Outside, the city was slowly waking up. She decided to start with the most important task and leave the rest for later.`,
 
-    `The path to the lake began behind the last house in the village. It passed through a quiet forest and followed a narrow stream. Alex walked slowly, listening to the birds above him. When he reached the water, he sat on a wooden bench and took a warm drink from his bag.`
+    `The path to the lake began behind the last house in the village. It passed through a quiet forest and followed a narrow stream. Alex walked slowly, listening to the birds above him. When he reached the water, he sat on a wooden bench and took a warm drink from his bag.`,
+
+    `The kitchen window faced the garden. Every morning Nora opened it and listened to the birds before making coffee. The street was still quiet at that hour, and the air smelled of wet grass. She liked this short pause more than the rest of the day.
+
+The garden needed work, but Nora did not hurry. She watered the flowers, moved one small pot into the sun, and wrote a short list for the weekend. Then she sat at the table with her coffee and watched the light move across the floor.`,
+
+    `The bus arrived seven minutes late. Nobody seemed to mind. A man with a small dog sat near the window, and a student read a book about the sea. When the rain started, the windows fogged up and the whole bus felt warmer.
+
+At the last stop the driver waited while an older woman crossed the street. "No rush," he said, and the passengers smiled. It was a small thing, but the morning felt better because of it.`,
+
+    `Leo found an old camera in the cupboard. It still worked after he changed the battery. He took three photos of the same tree and one of the empty street. The pictures were not perfect, but they reminded him of a summer he had almost forgotten.
+
+He put the camera on the shelf next to his books. Maybe he would use it again next week. Maybe not. For now it was enough to know that it still worked and that some memories were waiting quietly in a drawer.`
   ],
 
   medium: [
@@ -96,7 +155,19 @@ const englishTextLibrary = {
 
     `There was a note on the workshop door: "Back in 15 minutes." Oliver looked at his watch and sat down on a nearby bench. Had the owner just left? Before he could decide what to do, the door opened. "Are you here for the bicycle? Good news: it is ready!"`,
 
-    `"Let's take the longer route," suggested Mia. It was only 3 kilometers more, and the path followed the river. Her friends agreed, but first they stopped for lunch. They had a simple plan: eat, check the map, and return before sunset. What could be better than an afternoon outside?`
+    `"Let's take the longer route," suggested Mia. It was only 3 kilometers more, and the path followed the river. Her friends agreed, but first they stopped for lunch. They had a simple plan: eat, check the map, and return before sunset. What could be better than an afternoon outside?`,
+
+    `"Is the shop still open?" asked Mia. It was 18:20, and the lights inside were already off. "They close at six on Sundays," said Tom. "We can come back tomorrow morning." They walked past the window and looked at the bicycles. One of them, a small red one, had a note on it: "Ask inside."
+
+They found the owner in the yard behind the shop. He was fixing a wheel and did not look surprised to see them. "The red one? It needs a new chain, but the frame is good." Mia looked at Tom. "Should we take it?" she asked. Tom only smiled.`,
+
+    `The train was crowded, so they stood near the door with their bags between them. "We have 40 minutes," said Anna. "Enough time for coffee?" asked Ben. She smiled and pointed at a small cafe on the platform. They drank too quickly, but the coffee was good and they did not miss the train.
+
+The seats were not together, so Anna sat by the window and Ben found a place two rows back. They agreed to meet at the last carriage. For most of the journey they did not speak, and both of them were fine with that.`,
+
+    `On Monday the office was almost empty. Half the team was at a conference, and the rest worked from home. "Let's finish the report before lunch," said Kate. They divided the pages, checked the numbers twice, and sent the file at 11:50. Then they went for a walk because the sun had finally come out.
+
+At the cafe Kate asked, "Do you think anyone will read it?" Mark shrugged. "The client will. And that is the only person who matters today." They ordered two coffees and stayed until 13:00, talking about everything except work.`
   ],
 
   hard: [
@@ -104,6 +175,20 @@ const englishTextLibrary = {
 
     `"Are you sure this is the right house?" asked Claire. The address matched: 24 Forest Road. However, the old wooden gate was gone, and the garden looked different. Someone moved behind a window; a moment later, the door opened. "Come in! We've been expecting you since 10:30."`,
 
-    `The forecast promised +18 degrees, a light breeze, and rain after 19:00. "Perfect weather, provided we return early," said Nathan. Their plan had 3 parts: leave at 08:15, walk around the lake (about 2 hours), and find somewhere for lunch. Simple enough - unless the weather changed again!`
+    `The forecast promised +18 degrees, a light breeze, and rain after 19:00. "Perfect weather, provided we return early," said Nathan. Their plan had 3 parts: leave at 08:15, walk around the lake (about 2 hours), and find somewhere for lunch. Simple enough - unless the weather changed again!`,
+
+    `The letter was dated March 3 (though the envelope was stamped two days later), and it began with an apology: "I know I promised to write in January; I also know that a promise is worth little without a date." Elena read it twice, then put it on the table and opened the window. Outside, the first warm day of the year was happening without her.
+
+She wrote back that same evening - 4 paragraphs, no excuses. In the last one she asked a single question: "If the date was wrong, does the promise still count?" The answer arrived on Friday, and it was shorter than she expected: "The date was wrong. The promise was not."`,
+
+    `Their plan had four parts: leave at 06:15, reach the lake by 09:00 (about 11 kilometers), spend an hour there, and return before the rain (forecast: 40% chance after 16:00). "Simple enough," said Mark. By 09:20 they were still looking for the right path, and the weather had already changed twice.
+
+They found the lake at 10:05, which was 65 minutes later than planned (and 2 kilometers shorter than expected). Nobody complained. Mark took out the sandwiches, Helen unfolded the map, and for the next hour the plan did not matter at all.`,
+
+    `In 1998 the library occupied a single room on the second floor; by 2010 it had three rooms, 12 computers, and a waiting list for the reading hall. "People said the internet would end libraries," the librarian noted, "but we have 2000 more readers than we had then." She closed the register, turned off the lamp, and locked the door at 19:05.
+
+The building itself has changed less: the same stairs, the same narrow windows, the same notice near the entrance ("Silence is part of the collection"). Only the sign above the door is new, and even that was painted by a reader who refused to take money for it.`
   ]
 };
+
+splitIntoPassages(englishTextLibrary);
