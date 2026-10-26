@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>TypeFlow — тест скорости печати</title>
+    <title>TypeFlow — тренажёр скорости печати и уроки</title>
+    <meta name="description" content="TypeFlow: тест скорости печати на время и 10 уроков слепой печати с теорией и практикой.">
 
     <link rel="stylesheet" href="style.css">
       <script src="texts.js" defer></script>
@@ -29,7 +30,7 @@
             </nav>
         </div>
 
-        <span class="header-label">ТВОЙ РИТМ. ТВОЯ СКОРОСТЬ.</span>
+        <span class="header-label">ТРЕНАЖЁР И 10 УРОКОВ</span>
 
         <span class="version">BETA 01</span>
         </header>
@@ -38,18 +39,19 @@
         <section class="intro">
             <div class="eyebrow">
             <span class="status-dot" aria-hidden="true"></span>
-            ПРОСТРАНСТВО ДЛЯ ПРАКТИКИ
+            ТРЕНАЖЁР СКОРОСТИ ПЕЧАТИ
             </div>
 
-            <h1>Поймай свой <span>поток.</span></h1>
+            <h1>Проверь свою <span>скорость печати.</span></h1>
 
             <p class="intro-description">
-            Оставь лишнее за экраном. Только ты, клавиатура и ритм.
+            Печатай слова или готовый текст на время. Сайт считает скорость,
+            точность и ошибки и сохраняет личный рекорд.
             </p>
         </section>
 
               <div class="mode-picker">
-        <p class="mode-picker-caption">ВЫБЕРИ СВОЙ РЕЖИМ</p>
+        <p class="mode-picker-caption">ВЫБЕРИ РЕЖИМ</p>
 
         <div
           id="mode-switch"
@@ -66,7 +68,7 @@
             aria-pressed="true"
           >
             <span class="mode-button-title">Слова</span>
-            <span class="mode-button-description">Свободный ритм</span>
+            <span class="mode-button-description">Отдельные слова</span>
           </button>
 
           <button
@@ -76,7 +78,7 @@
             aria-pressed="false"
           >
             <span class="mode-button-title">Текст</span>
-            <span class="mode-button-description">Живая пунктуация</span>
+            <span class="mode-button-description">Связные отрывки</span>
           </button>
         </div>
       </div>
@@ -223,8 +225,8 @@
 
             <div class="typing-area">
             <p id="text" class="typing-text">
-                каждый новый день это возможность стать немного лучше
-                найти свой ритм почувствовать движение и продолжить путь
+                текст для печати появится здесь
+                начни печатать — тест запустится
             </p>
 
             <label class="input-label" for="typing-input">
@@ -235,7 +237,7 @@
                 id="typing-input"
                 class="typing-input"
                 type="text"
-                placeholder="Твой поток начинается здесь…"
+                placeholder="Начни печатать — тест запустится"
                 autocomplete="off"
                 autocapitalize="off"
                 spellcheck="false"
@@ -243,7 +245,7 @@
             </div>
 
                     <div class="test-footer">
-            <span class="hint">Не спеши. Точность важнее суеты.</span>
+            <span class="hint">Ошибки считаются, даже если их исправить.</span>
 
             <button id="restart" class="restart-button" type="button">
                 <span aria-hidden="true">↻</span>
@@ -261,11 +263,11 @@
         >
             <div class="result-heading">
             <div>
-                <span class="result-eyebrow">ПОТОК ЗАВЕРШЁН</span>
+                <span class="result-eyebrow">ПОПЫТКА ЗАВЕРШЕНА</span>
                 <h2 id="result-title">Твой результат</h2>
             </div>
 
-            <span class="result-badge">Хорошая практика ↗</span>
+            <span class="result-badge">Результат</span>
             </div>
 
             <div class="result-grid">
@@ -321,7 +323,7 @@
           <p id="record-mode" class="record-mode"></p>
 
           <p id="record-details" class="record-details">
-            Твой первый рекорд ещё впереди.
+            Рекорд появится после попытки с точностью от 90%.
           </p>
         </div>
 
@@ -341,29 +343,29 @@
         <section class="lesson-teaser" aria-labelledby="lesson-teaser-title">
             <div class="lesson-teaser-text">
                 <span class="lesson-teaser-eyebrow">ШКОЛА СЛЕПОЙ ПЕЧАТИ</span>
-                <h2 id="lesson-teaser-title">Шесть уроков — от домашнего ряда до цифр</h2>
+                <h2 id="lesson-teaser-title">10 уроков: от домашнего ряда до текстов</h2>
                 <p>
-                    Домашний ряд, верхний, нижний, знаки, слова с ё и урок
-                    про цифры. Теория и практика в каждом. Первый урок
-                    бесплатный, остальные — платный блок, открытый в бете.
+                    Домашний ряд, верхний, нижний, знаки, ё, цифры и текстовые
+                    уроки со скоростью в WPM. В каждом уроке есть теория
+                    и практика. Первый урок бесплатный, остальные открыты в бете.
                 </p>
             </div>
 
             <a class="lesson-teaser-link" href="lessons.html">
-                Открыть курс <span aria-hidden="true">↗</span>
+                Открыть уроки <span aria-hidden="true">↗</span>
             </a>
         </section>
       
         <div class="bottom-note">
             <span class="note-line" aria-hidden="true"></span>
-            МАЛЕНЬКАЯ ПРАКТИКА. БОЛЬШОЙ ПРОГРЕСС.
+            ТОЧНОСТЬ ВАЖНЕЕ СКОРОСТИ
             <span class="note-line" aria-hidden="true"></span>
         </div>
         </main>
 
         <footer class="footer">
         <span>TypeFlow © 2026</span>
-        <span>Создано для состояния потока</span>
+        <span>Тренажёр и уроки слепой печати</span>
         </footer>
     </div>
         <dialog
@@ -377,7 +379,7 @@
           id="record-modal-close"
           class="record-modal-close"
           type="button"
-          aria-label="Закрыть поздравление"
+          aria-label="Закрыть окно рекорда"
           autofocus
         >
           ×
@@ -385,7 +387,7 @@
 
         <div class="record-modal-symbol" aria-hidden="true">✦</div>
 
-        <span class="record-modal-eyebrow">ТВОЙ НОВЫЙ УРОВЕНЬ</span>
+        <span class="record-modal-eyebrow">ЛИЧНЫЙ РЕКОРД</span>
 
         <h2 id="record-modal-title">Новый рекорд!</h2>
 
@@ -399,8 +401,8 @@
         <span id="record-modal-gain" class="record-modal-gain"></span>
 
         <p id="record-modal-message" class="record-modal-message">
-          Отличная работа! Ты поймал свой ритм.
-          Продолжай практиковаться — следующий рекорд впереди.
+          Результат сохранён. Продолжай тренироваться —
+          следующий рекорд впереди.
         </p>
 
         <p id="record-modal-storage" class="record-modal-storage" hidden></p>
@@ -410,7 +412,7 @@
           class="record-modal-continue"
           type="button"
         >
-          Класс! Посмотреть результат
+          Продолжить
           <span aria-hidden="true">↗</span>
         </button>
       </div>

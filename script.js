@@ -383,13 +383,13 @@ function showResult() {
     resultMessage.textContent = "В этой попытке не было ввода.";
   } else if (stats.accuracy >= 95) {
     resultMessage.textContent =
-      "Очень аккуратная работа! Попробуй сохранить точность и немного ускориться.";
+      "Точность выше 95%. Хороший результат — можно попробовать печатать быстрее.";
   } else if (stats.accuracy >= 80) {
     resultMessage.textContent =
-      "Хорошая практика. В следующей попытке удели чуть больше внимания точности.";
+      "Точность 80–95%. В следующей попытке следи за ошибками — скорость вырастет.";
   } else {
     resultMessage.textContent =
-      "Попробуй снизить темп и сверяться с подсвеченным символом. Исправленные ошибки тоже учитываются.";
+      "Печатай медленнее и смотри на подсвеченный символ: исправленные ошибки тоже учитываются.";
   }
 
   resultCard.hidden = false;
@@ -478,8 +478,8 @@ function updateControls() {
   textElement.lang = selectedLanguage;
 
   input.placeholder = selectedLanguage === "ru"
-    ? "Твой поток начинается здесь…"
-    : "Start typing here...";
+    ? "Начни печатать — тест запустится"
+    : "Start typing to begin the test";
 }
 
 function resetTest(focusInput = false) {
@@ -500,7 +500,7 @@ function resetTest(focusInput = false) {
 
   inputLabel.textContent = "Начни печатать, чтобы запустить тест";
   hint.textContent =
-    "Печатай спокойно. Ошибки сохраняются даже после исправления.";
+    "Ошибки считаются, даже если исправить их позже.";
 
   updateControls();
   loadPassage();
@@ -559,7 +559,7 @@ function renderRecord() {
   } else {
     recordValue.textContent = "—";
     recordDetails.textContent =
-      "Пройди тест с точностью от 90%, чтобы установить рекорд.";
+      "Рекорд записывается при точности от 90%.";
   }
 
   if (!recordStorageAvailable) {
@@ -638,11 +638,11 @@ function openRecordModal(stats, previous) {
 
   document.getElementById("record-modal-gain").textContent = previous
     ? `+${stats.wpm - previous.wpm} WPM к прошлому рекорду`
-    : "Отличное начало твоей истории";
+    : "Это твой первый результат";
 
   document.getElementById("record-modal-message").textContent = previous
-    ? "Ты превзошёл свой лучший результат! Сохраняй точность, находи свой ритм и двигайся дальше."
-    : "Первый рубеж пройден! Теперь у тебя есть результат, который можно улучшить. Хорошая работа!";
+    ? "Ты улучшил свой лучший результат. Попробуй повторить его и не потерять точность."
+    : "Первый результат сохранён. Теперь его можно улучшить.";
 
   const storageMessage = document.getElementById("record-modal-storage");
   storageMessage.hidden = recordStorageAvailable;

@@ -21,6 +21,7 @@ const els = {
 
   theory: document.getElementById("theory-list"),
   startPractice: document.getElementById("start-practice"),
+  practiceHint: document.getElementById("practice-hint"),
 
   drillTitle: document.getElementById("drill-title"),
   drillHint: document.getElementById("drill-hint"),
@@ -192,8 +193,8 @@ function buildTextDrills(item) {
   return passages.map((text, index) => ({
     title: `Абзац ${index + 1} из ${count}`,
     hint:
-      "Печатай в своём ритме. Ошибки подсвечиваются, но текст не " +
-      "останавливают — как в тренажёре.",
+      "Печатай ровно. Ошибки подсвечиваются, но текст не останавливают — " +
+      "как в тренажёре.",
     lines: [text]
   }));
 }
@@ -784,23 +785,20 @@ function renderResult(result, previous) {
   els.resultErrors.textContent = String(result.errors);
 
   els.resultBadge.textContent = previous.completed
-    ? "Урок повторён"
-    : "Урок пройден";
+    ? "Результат обновлён"
+    : "Результат сохранён";
 
   if (result.accuracy >= 97) {
     els.resultMessage.textContent = isTextLesson
-      ? "Отличный темп и почти идеальная точность. " +
-        "Следующий шаг — удержать WPM на более сложном тексте."
-      : "Почти идеально: пальцы уже знают, куда идти. " +
-        "Дальше можно закреплять результат в тренажёре.";
+      ? "Точность выше 97%. Отличный результат — можно переходить к более сложному тексту."
+      : "Точность выше 97%. Отличный результат — переходи к следующему уроку.";
   } else if (result.accuracy >= 90) {
     els.resultMessage.textContent =
-      "Хорошая работа. Точность выше 90% — это уверенный результат. " +
-      "Повтори урок ещё раз, чтобы закрепить.";
+      "Точность 90–97%. Хороший результат, но ошибки ещё есть — повтори урок.";
   } else {
     els.resultMessage.textContent =
-      "Урок пройден, но точность пока ниже 90%. Это нормально: " +
-      "верни урок через день и печатай медленнее, следя за пальцами.";
+      "Точность ниже 90%. Печатай медленнее и следи, чтобы пальцы " +
+      "оставались на домашнем ряду.";
   }
 
   const record = getLessonRecord(lesson.id);
@@ -984,6 +982,10 @@ function startLessonView() {
   els.unavailable.hidden = true;
   els.view.hidden = false;
   els.speedStat.hidden = !isTextLesson;
+
+  els.practiceHint.textContent = isTextLesson
+    ? "Печатай абзац целиком, ошибки подсвечиваются"
+    : "Печатай строку целиком, ошибки подсвечиваются";
 
   renderLesson();
 
