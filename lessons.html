@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="TypeFlow — уроки слепой печати: теория и практика.">
+
+<title>Уроки слепой печати — TypeFlow</title>
+
+<link rel="stylesheet" href="style.css">
+  <script src="lessons-data.js" defer></script>
+  <script src="lessons.js" defer></script>
+</head>
+
+<body>
+<div class="ambient ambient-purple" aria-hidden="true"></div>
+<div class="ambient ambient-cyan" aria-hidden="true"></div>
+
+<div class="page">
+  <header class="header">
+    <div class="header-main">
+      <a class="logo" href="index.html" aria-label="TypeFlow — главная">
+        <span class="logo-icon" aria-hidden="true">⌘</span>
+        <span>type<span class="logo-accent">flow</span></span>
+      </a>
+
+      <nav class="header-nav" aria-label="Разделы">
+        <a class="nav-link" href="index.html">Тренажёр</a>
+        <a class="nav-link is-active" href="lessons.html" aria-current="page">Уроки</a>
+      </nav>
+    </div>
+
+    <span class="header-label">УЧИСЬ. ПОВТОРЯЙ. УСКОРЯЙСЯ.</span>
+
+    <span class="version">BETA 01</span>
+  </header>
+
+  <main>
+    <section class="lesson-intro">
+      <div class="eyebrow">
+        <span class="status-dot" aria-hidden="true"></span>
+        ШКОЛА СЛЕПОЙ ПЕЧАТИ
+      </div>
+
+      <h1>Печатай <span>вслепую.</span></h1>
+
+      <p class="intro-description">
+        Короткие уроки: сначала теория, потом практика на клавиатуре.
+        По одному шагу за раз — от домашнего ряда до ровного ритма.
+      </p>
+    </section>
+
+    <section class="roadmap-section" aria-labelledby="course-title">
+      <div class="roadmap-head">
+        <div>
+          <span class="roadmap-eyebrow">КУРС</span>
+          <h2 id="course-title">Уроки по порядку</h2>
+        </div>
+
+        <p id="course-stats" class="roadmap-stats"></p>
+      </div>
+
+      <div id="lesson-roadmap" class="roadmap"></div>
+
+      <div class="course-note-block">
+        <span class="badge badge-free">Бесплатно в бете</span>
+        <p id="course-note" class="course-note"></p>
+      </div>
+    </section>
+
+    <section id="lesson-view" aria-labelledby="lesson-title">
+      <div class="lesson-head">
+        <div class="lesson-head-text">
+          <span id="lesson-eyebrow" class="lesson-eyebrow"></span>
+          <h2 id="lesson-title">Домашний ряд</h2>
+          <p id="lesson-summary" class="lesson-summary"></p>
+          <p id="lesson-access-note" class="lesson-access-note" hidden></p>
+        </div>
+
+        <div id="lesson-meta" class="lesson-meta"></div>
+      </div>
+
+      <div class="lesson-section-head">
+        <h3 class="lesson-section-title">Теория</h3>
+        <span class="lesson-section-hint">Прочитай перед практикой</span>
+      </div>
+
+      <div id="theory-list" class="theory-list"></div>
+
+      <button id="start-practice" class="lesson-start" type="button">
+        Перейти к практике
+        <span aria-hidden="true">↓</span>
+      </button>
+
+      <div class="lesson-section-head">
+        <h3 class="lesson-section-title">Практика</h3>
+        <span class="lesson-section-hint">
+          Печатай строку целиком, ошибки подсвечиваются
+        </span>
+      </div>
+
+      <section class="practice-card" aria-labelledby="drill-title">
+        <div class="practice-head">
+          <div>
+            <span id="step-counter" class="practice-counter"></span>
+            <h4 id="drill-title" class="practice-title"></h4>
+          </div>
+
+          <span id="line-counter" class="practice-counter"></span>
+        </div>
+
+        <div
+          id="lesson-progress"
+          class="progress"
+          role="progressbar"
+          aria-label="Прогресс урока"
+          aria-valuemin="0"
+          aria-valuemax="100"
+          aria-valuenow="0"
+        >
+          <span id="progress-fill" class="progress-fill"></span>
+        </div>
+
+        <p id="drill-hint" class="drill-hint"></p>
+
+        <div class="lesson-typing">
+          <p id="task-text" class="lesson-task"></p>
+
+          <label id="lesson-input-label" class="input-label" for="lesson-input">
+            Печатай строку и не смотри на клавиатуру
+          </label>
+
+          <input
+            id="lesson-input"
+            class="typing-input lesson-input"
+            type="text"
+            placeholder="Печатай строку выше…"
+            autocomplete="off"
+            autocapitalize="off"
+            spellcheck="false"
+            aria-describedby="drill-hint"
+          >
+        </div>
+
+        <div class="practice-footer">
+          <div class="practice-stats">
+            <span class="practice-stat">
+              Точность
+              <b id="stat-accuracy">100%</b>
+            </span>
+
+            <span class="practice-stat">
+              Время
+              <b id="stat-time">0:00</b>
+            </span>
+
+            <span class="practice-stat">
+              Ошибки
+              <b id="stat-errors">0</b>
+            </span>
+          </div>
+
+          <button id="lesson-restart" class="restart-button" type="button">
+            <span aria-hidden="true">↻</span> Строка заново
+          </button>
+        </div>
+      </section>
+
+      <section id="lesson-result" class="result-card" aria-live="polite" hidden>
+        <div class="result-heading">
+          <div>
+            <span class="result-eyebrow">РЕЗУЛЬТАТ УРОКА</span>
+            <h2 id="result-title">Урок пройден</h2>
+          </div>
+
+          <span id="result-badge" class="result-badge">Урок пройден</span>
+        </div>
+
+        <div class="result-grid">
+          <div class="result-item">
+            <span class="result-label">Точность</span>
+            <div class="result-number">
+              <span id="result-accuracy">0</span>
+              <span class="result-unit">%</span>
+            </div>
+          </div>
+
+          <div class="result-item">
+            <span class="result-label">Время урока</span>
+            <div class="result-number">
+              <span id="result-time">0:00</span>
+            </div>
+          </div>
+
+          <div class="result-item">
+            <span class="result-label">Темп</span>
+            <div class="result-number">
+              <span id="result-speed">0</span>
+              <span class="result-unit">зн/мин</span>
+            </div>
+          </div>
+
+          <div class="result-item">
+            <span class="result-label">Ошибки</span>
+            <div class="result-number">
+              <span id="result-errors">0</span>
+            </div>
+          </div>
+        </div>
+
+        <p id="result-message" class="result-message"></p>
+        <p id="result-best" class="result-best"></p>
+
+        <div class="result-actions">
+          <button id="result-again" class="try-again-button" type="button">
+            Пройти ещё раз <span aria-hidden="true">↗</span>
+          </button>
+
+          <a class="result-link" href="index.html">В тренажёр</a>
+        </div>
+      </section>
+    </section>
+
+    <section id="lesson-unavailable" class="lesson-unavailable" hidden>
+      <h2 id="unavailable-title">Урок пока недоступен</h2>
+      <p id="unavailable-text"></p>
+
+      <div class="result-actions">
+        <a class="try-again-button" href="lessons.html?lesson=home-row">
+          Открыть первый урок <span aria-hidden="true">↗</span>
+        </a>
+        <a class="result-link" href="index.html">В тренажёр</a>
+      </div>
+    </section>
+
+    <div class="bottom-note">
+      <span class="note-line" aria-hidden="true"></span>
+      МАЛЕНЬКИЕ ШАГИ. БОЛЬШОЙ ПРОГРЕСС.
+      <span class="note-line" aria-hidden="true"></span>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <span>TypeFlow © 2026</span>
+    <span>Создано для состояния потока</span>
+  </footer>
+</div>
+</body>
+</html>

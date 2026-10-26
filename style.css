@@ -1356,3 +1356,915 @@ h1 span {
     transition: none;
   }
 }
+/* ------------------------------------------------------------------ */
+/* Уроки слепой печати                                              */
+/* ------------------------------------------------------------------ */
+
+.header-main {
+  display: flex;
+  align-items: center;
+  gap: 26px;
+}
+
+.header-nav {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  padding: 4px;
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.nav-link {
+  padding: 7px 14px;
+  border-radius: 100px;
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 12px;
+  transition: color 160ms, background 160ms;
+}
+
+.nav-link:hover {
+  color: var(--text);
+  background: rgba(184, 160, 255, 0.08);
+}
+
+.nav-link.is-active {
+  color: var(--accent);
+  background: rgba(184, 160, 255, 0.14);
+}
+
+.lesson-intro {
+  text-align: center;
+  margin-bottom: 46px;
+}
+
+.lesson-intro h1 {
+  font-size: clamp(32px, 5vw, 50px);
+}
+
+.lesson-head-text {
+  min-width: 0;
+}
+
+.roadmap-section {
+  margin-top: 4px;
+}
+
+/* --- Курс --------------------------------------------------------- */
+
+.roadmap-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.roadmap-eyebrow {
+  color: var(--accent);
+  font-size: 10px;
+  letter-spacing: 2px;
+}
+
+.roadmap-head h2 {
+  margin: 8px 0 0;
+  font-size: 24px;
+  letter-spacing: -0.5px;
+}
+
+.roadmap-stats {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+  text-align: right;
+}
+
+.roadmap {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.roadmap-card {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 18px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: #12151f;
+  color: inherit;
+  text-decoration: none;
+  transition: border-color 180ms, transform 180ms, background 180ms;
+}
+
+.roadmap-card.is-available:hover {
+  border-color: rgba(184, 160, 255, 0.35);
+  background: #151827;
+  transform: translateY(-2px);
+}
+
+.roadmap-card.is-active {
+  border-color: rgba(184, 160, 255, 0.45);
+  box-shadow: inset 0 0 0 1px rgba(184, 160, 255, 0.12);
+}
+
+.roadmap-card.is-locked {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.roadmap-card.is-completed {
+  border-color: rgba(140, 232, 193, 0.22);
+}
+
+.roadmap-card.is-completed .roadmap-arrow {
+  color: #8ce8c1;
+}
+
+.roadmap-number {
+  flex-shrink: 0;
+  padding: 4px 7px;
+  border: 1px solid rgba(184, 160, 255, 0.25);
+  border-radius: 8px;
+  color: var(--accent);
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+}
+
+.roadmap-body {
+  min-width: 0;
+  flex: 1;
+  padding-right: 14px;
+}
+
+.roadmap-kicker {
+  display: block;
+  color: var(--muted);
+  font-size: 9px;
+  letter-spacing: 1.1px;
+  text-transform: uppercase;
+}
+
+.roadmap-title {
+  margin: 6px 0 2px;
+  font-size: 16px;
+  letter-spacing: -0.2px;
+}
+
+.roadmap-subtitle {
+  margin: 0;
+  color: var(--muted);
+  font-size: 10.5px;
+  letter-spacing: 0.5px;
+}
+
+.roadmap-footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 12px;
+}
+
+.roadmap-arrow {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.roadmap-card.is-available .roadmap-arrow {
+  color: var(--accent);
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 9px;
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  color: var(--muted);
+  font-size: 9.5px;
+  letter-spacing: 0.3px;
+  white-space: nowrap;
+}
+
+.badge-ready,
+.badge-done {
+  border-color: rgba(140, 232, 193, 0.25);
+  background: rgba(140, 232, 193, 0.07);
+  color: #8ce8c1;
+}
+
+.badge-soon {
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.badge-paid {
+  border-color: rgba(255, 155, 175, 0.25);
+  background: rgba(255, 155, 175, 0.06);
+  color: #ff9baf;
+}
+
+.badge-free {
+  border-color: rgba(184, 160, 255, 0.3);
+  background: rgba(184, 160, 255, 0.08);
+  color: var(--accent);
+}
+
+.course-note-block {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-top: 16px;
+  padding: 16px 18px;
+  border: 1px dashed rgba(184, 160, 255, 0.22);
+  border-radius: 14px;
+  background: rgba(184, 160, 255, 0.035);
+}
+
+.course-note-block .badge {
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.course-note {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+/* --- Шапка урока -------------------------------------------------- */
+
+.lesson-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  margin: 58px 0 30px;
+  padding-top: 30px;
+  border-top: 1px solid var(--border);
+}
+
+.lesson-eyebrow {
+  color: var(--accent);
+  font-size: 10px;
+  letter-spacing: 2px;
+}
+
+.lesson-head h2 {
+  margin: 10px 0 8px;
+  font-size: clamp(28px, 4vw, 40px);
+  letter-spacing: -1px;
+}
+
+.lesson-summary {
+  margin: 0;
+  max-width: 62ch;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.lesson-access-note {
+  max-width: 62ch;
+  margin: 14px 0 0;
+  padding: 12px 14px;
+  border: 1px dashed rgba(255, 155, 175, 0.28);
+  border-radius: 10px;
+  background: rgba(255, 155, 175, 0.045);
+  color: #d8bdc6;
+  font-size: 12px;
+  line-height: 1.65;
+}
+
+.lesson-meta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 6px;
+  max-width: 280px;
+}
+
+.lesson-chip {
+  padding: 5px 10px;
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  color: var(--muted);
+  font-size: 10px;
+  white-space: nowrap;
+}
+
+.lesson-chip.is-free {
+  border-color: rgba(140, 232, 193, 0.25);
+  color: #8ce8c1;
+}
+
+.lesson-chip.is-paid {
+  border-color: rgba(255, 155, 175, 0.3);
+  color: #ff9baf;
+}
+
+.lesson-chip.is-record {
+  border-color: rgba(184, 160, 255, 0.3);
+  color: var(--accent);
+}
+
+.lesson-section-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 34px 0 16px;
+}
+
+.lesson-section-title {
+  margin: 0;
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 2.4px;
+  text-transform: uppercase;
+}
+
+.lesson-section-hint {
+  color: #6e7288;
+  font-size: 11px;
+  text-align: right;
+}
+
+/* --- Теория ------------------------------------------------------- */
+
+.theory-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.theory-card {
+  display: flex;
+  gap: 16px;
+  padding: 22px;
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  background: var(--surface);
+}
+
+.theory-card.is-wide {
+  grid-column: 1 / -1;
+}
+
+.theory-index {
+  padding-top: 3px;
+  color: rgba(184, 160, 255, 0.5);
+  font-size: 11px;
+  letter-spacing: 1px;
+}
+
+.theory-body {
+  min-width: 0;
+}
+
+.theory-body h3 {
+  margin: 0 0 10px;
+  font-size: 17px;
+  letter-spacing: -0.2px;
+}
+
+.theory-body p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13.5px;
+  line-height: 1.75;
+}
+
+.theory-tip {
+  margin-top: 14px;
+  padding: 12px 14px;
+  border-left: 2px solid rgba(184, 160, 255, 0.4);
+  border-radius: 0 10px 10px 0;
+  background: rgba(184, 160, 255, 0.05);
+  color: #b9bdd2;
+  font-size: 12.5px;
+}
+
+/* --- Схема клавиатуры --------------------------------------------- */
+
+.keyboard {
+  margin-top: 18px;
+  padding: 18px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: rgba(8, 10, 18, 0.45);
+}
+
+.keyboard-hand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.keyboard-hand + .keyboard-hand {
+  margin-top: 12px;
+}
+
+.keyboard-hand-label {
+  flex-shrink: 0;
+  width: 88px;
+  color: var(--muted);
+  font-size: 9.5px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.keyboard-keys {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.keyboard-key {
+  position: relative;
+  display: grid;
+  gap: 3px;
+  justify-items: center;
+  min-width: 58px;
+  padding: 10px 6px 8px;
+  border: 1px solid var(--border);
+  border-radius: 9px;
+  background: #10131d;
+}
+
+.keyboard-letter {
+  font-family: Consolas, "Courier New", monospace;
+  font-size: 18px;
+  line-height: 1;
+}
+
+.keyboard-finger {
+  color: var(--muted);
+  font-size: 8.5px;
+  letter-spacing: 0.2px;
+}
+
+.keyboard-key.has-bump::after {
+  content: "";
+  position: absolute;
+  top: 5px;
+  left: 50%;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: 0.7;
+  transform: translateX(-50%);
+}
+
+.finger-pinky {
+  border-color: rgba(255, 155, 175, 0.35);
+  background: rgba(255, 155, 175, 0.06);
+  color: #ff9baf;
+}
+
+.finger-ring {
+  border-color: rgba(242, 196, 141, 0.35);
+  background: rgba(242, 196, 141, 0.06);
+  color: #f2c48d;
+}
+
+.finger-middle {
+  border-color: rgba(143, 201, 255, 0.35);
+  background: rgba(143, 201, 255, 0.06);
+  color: #8fc9ff;
+}
+
+.finger-index {
+  border-color: rgba(140, 232, 193, 0.35);
+  background: rgba(140, 232, 193, 0.06);
+  color: #8ce8c1;
+}
+
+.keyboard-space {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 12px;
+  padding-left: 102px;
+}
+
+.keyboard-space-key {
+  padding: 8px 26px;
+  border: 1px dashed rgba(184, 160, 255, 0.3);
+  border-radius: 9px;
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.keyboard-caption {
+  margin: 14px 0 0;
+  color: #6e7288;
+  font-size: 11px;
+  line-height: 1.6;
+}
+
+.lesson-start {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 18px;
+  padding: 12px 18px;
+  border: 1px solid rgba(184, 160, 255, 0.3);
+  border-radius: 10px;
+  background: rgba(184, 160, 255, 0.1);
+  color: var(--accent);
+  font-size: 13px;
+  font-weight: 600;
+  transition: background 160ms, transform 160ms;
+}
+
+.lesson-start:hover {
+  background: rgba(184, 160, 255, 0.18);
+  transform: translateY(-1px);
+}
+
+/* --- Практика ----------------------------------------------------- */
+
+.practice-card {
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  background: var(--surface);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.22);
+}
+
+.practice-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 22px 28px;
+  border-bottom: 1px solid var(--border);
+}
+
+.practice-counter {
+  display: block;
+  color: var(--muted);
+  font-size: 10px;
+  letter-spacing: 1.6px;
+  text-transform: uppercase;
+}
+
+.practice-head > .practice-counter {
+  color: var(--accent);
+  white-space: nowrap;
+}
+
+.practice-title {
+  margin: 8px 0 0;
+  font-size: 19px;
+  font-weight: 600;
+  letter-spacing: -0.3px;
+}
+
+.progress {
+  height: 3px;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.progress-fill {
+  display: block;
+  width: 0;
+  height: 100%;
+  background: linear-gradient(90deg, #b8a0ff, #8ce8c1);
+  transition: width 300ms ease;
+}
+
+.drill-hint {
+  margin: 0;
+  padding: 16px 28px 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.65;
+}
+
+.lesson-typing {
+  margin: 16px 28px 0;
+  padding: 24px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: rgba(9, 11, 19, 0.6);
+  cursor: text;
+}
+
+.lesson-task {
+  min-height: 2.2em;
+  margin: 0 0 18px;
+  color: #a9adc3;
+  font-family: Consolas, "Courier New", monospace;
+  font-size: clamp(20px, 2.6vw, 28px);
+  line-height: 1.7;
+  letter-spacing: 1px;
+  text-align: center;
+  overflow-wrap: break-word;
+}
+
+.lesson-input {
+  text-align: center;
+  font-family: Consolas, "Courier New", monospace;
+  letter-spacing: 0.5px;
+}
+
+.practice-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 20px 28px;
+}
+
+.practice-stats {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 22px;
+}
+
+.practice-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  color: var(--muted);
+  font-size: 10px;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+}
+
+.practice-stat b {
+  color: var(--text);
+  font-size: 16px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0;
+  text-transform: none;
+}
+
+/* --- Результат и заглушка ----------------------------------------- */
+
+.result-best {
+  margin: -8px 0 22px;
+  color: var(--accent);
+  font-size: 12px;
+  letter-spacing: 0.3px;
+}
+
+.result-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 18px;
+}
+
+.result-link {
+  padding-bottom: 2px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  color: var(--muted);
+  font-size: 12px;
+  text-decoration: none;
+}
+
+.result-link:hover {
+  color: var(--text);
+}
+
+.lesson-unavailable {
+  margin-top: 40px;
+  padding: 36px;
+  border: 1px dashed rgba(184, 160, 255, 0.25);
+  border-radius: 20px;
+  background: rgba(184, 160, 255, 0.03);
+  text-align: center;
+}
+
+.lesson-unavailable h2 {
+  margin: 0 0 12px;
+  font-size: 26px;
+  letter-spacing: -0.6px;
+}
+
+.lesson-unavailable p {
+  max-width: 56ch;
+  margin: 0 auto 24px;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.lesson-unavailable .result-actions {
+  justify-content: center;
+}
+
+.lesson-unavailable .try-again-button {
+  text-decoration: none;
+}
+
+/* --- Адаптив ------------------------------------------------------ */
+
+@media (max-width: 900px) {
+  .roadmap {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .theory-list {
+    grid-template-columns: 1fr;
+  }
+
+  .lesson-head {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .lesson-meta {
+    justify-content: flex-start;
+    max-width: none;
+  }
+
+  .lesson-section-hint {
+    display: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .header-main {
+    gap: 12px;
+  }
+
+  .version {
+    display: none;
+  }
+
+  .header-nav {
+    gap: 2px;
+  }
+
+  .nav-link {
+    padding: 6px 9px;
+    font-size: 10.5px;
+  }
+
+  .roadmap {
+    grid-template-columns: 1fr;
+  }
+
+  .roadmap-head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .roadmap-stats {
+    text-align: left;
+  }
+
+  .lesson-head {
+    margin-top: 42px;
+  }
+
+  .theory-card {
+    padding: 18px;
+    gap: 12px;
+  }
+
+  .keyboard {
+    padding: 14px;
+  }
+
+  .keyboard-hand {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .keyboard-space {
+    padding-left: 0;
+  }
+
+  .practice-head {
+    padding: 18px;
+  }
+
+  .drill-hint {
+    padding: 14px 18px 0;
+  }
+
+  .lesson-typing {
+    margin: 14px 18px 0;
+    padding: 18px 14px;
+  }
+
+  .practice-footer {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 16px 18px;
+  }
+
+  .practice-stats {
+    gap: 16px;
+  }
+
+  .lesson-unavailable {
+    padding: 24px 18px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .roadmap-card,
+  .lesson-start,
+  .progress-fill,
+  .nav-link {
+    transition: none;
+  }
+}
+
+/* --- Lesson teaser on the main page -------------------------------- */
+
+.lesson-teaser {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  margin-top: 26px;
+  padding: 26px 28px;
+  border: 1px solid rgba(184, 160, 255, 0.22);
+  border-radius: 18px;
+  background:
+    radial-gradient(
+      ellipse at top right,
+      rgba(145, 104, 255, 0.1),
+      transparent 60%
+    ),
+    #11141f;
+}
+
+.lesson-teaser-eyebrow {
+  color: var(--accent);
+  font-size: 10px;
+  letter-spacing: 2px;
+}
+
+.lesson-teaser-text h2 {
+  margin: 10px 0 8px;
+  font-size: 22px;
+  letter-spacing: -0.4px;
+}
+
+.lesson-teaser-text p {
+  margin: 0;
+  max-width: 58ch;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.lesson-teaser-link {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  gap: 10px;
+  padding: 12px 18px;
+  border: 1px solid rgba(184, 160, 255, 0.3);
+  border-radius: 10px;
+  background: rgba(184, 160, 255, 0.12);
+  color: var(--accent);
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 160ms, transform 160ms;
+}
+
+.lesson-teaser-link:hover {
+  background: rgba(184, 160, 255, 0.2);
+  transform: translateY(-1px);
+}
+
+@media (max-width: 700px) {
+  .lesson-teaser {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 18px;
+    padding: 20px;
+  }
+
+  .lesson-teaser-text h2 {
+    font-size: 19px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lesson-teaser-link {
+    transition: none;
+  }
+}
