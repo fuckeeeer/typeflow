@@ -8,6 +8,7 @@
 <title>Уроки слепой печати — TypeFlow</title>
 
 <link rel="stylesheet" href="style.css">
+  <script src="texts.js" defer></script>
   <script src="lessons-data.js" defer></script>
   <script src="lessons.js" defer></script>
 </head>
@@ -150,6 +151,11 @@
               <b id="stat-accuracy">100%</b>
             </span>
 
+            <span id="speed-stat" class="practice-stat" hidden>
+              Скорость (WPM)
+              <b id="stat-speed">0</b>
+            </span>
+
             <span class="practice-stat">
               Время
               <b id="stat-time">0:00</b>
@@ -194,10 +200,10 @@
           </div>
 
           <div class="result-item">
-            <span class="result-label">Темп</span>
+            <span id="result-speed-label" class="result-label">Темп</span>
             <div class="result-number">
               <span id="result-speed">0</span>
-              <span class="result-unit">зн/мин</span>
+              <span id="result-speed-unit" class="result-unit">зн/мин</span>
             </div>
           </div>
 

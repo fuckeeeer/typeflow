@@ -33,6 +33,8 @@ const els = {
   input: document.getElementById("lesson-input"),
   inputLabel: document.getElementById("lesson-input-label"),
   accuracy: document.getElementById("stat-accuracy"),
+  speedStat: document.getElementById("speed-stat"),
+  speed: document.getElementById("stat-speed"),
   time: document.getElementById("stat-time"),
   errors: document.getElementById("stat-errors"),
   restart: document.getElementById("lesson-restart"),
@@ -43,6 +45,8 @@ const els = {
   resultAccuracy: document.getElementById("result-accuracy"),
   resultTime: document.getElementById("result-time"),
   resultSpeed: document.getElementById("result-speed"),
+  resultSpeedLabel: document.getElementById("result-speed-label"),
+  resultSpeedUnit: document.getElementById("result-speed-unit"),
   resultErrors: document.getElementById("result-errors"),
   resultMessage: document.getElementById("result-message"),
   resultBest: document.getElementById("result-best"),
@@ -157,8 +161,48 @@ const lesson = requestedId
   ? lessons.find((item) => item.id === requestedId)
   : lessons[0];
 
-const drills =
-  lesson && Array.isArray(lesson.drills)
+// Текстовый урок: отрывки берутся из texts.js (как в тренажёре).
+const isTextLesson = Boolean(lesson && lesson.textPool);
+
+function shuffleCopy(items) {
+  const copy = items.slice();
+
+  for (let i = copy.length - 1; i > 0; i -= 1) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [copy[i], copy[j]] = [copy[j], copy[i]];
+  }
+
+  return copy;
+}
+
+function buildTextDrills(item) {
+  if (!item || !item.textPool) return null;
+
+  if (typeof textLibrary === "undefined") return [];
+
+  const level = item.textPool.level;
+  const pool = level === "mixed"
+    ? Object.values(textLibrary).flat()
+    : textLibrary[level] || [];
+
+  const wanted = Math.max(1, Number(item.textPool.count) || 1);
+  const count = Math.min(wanted, pool.length);
+  const passages = shuffleCopy(pool).slice(0, count);
+
+  return passages.map((text, index) => ({
+    title: `Абзац ${index + 1} из ${count}`,
+    hint:
+      "Печатай в своём ритме. Ошибки подсвечиваются, но текст не " +
+      "останавливают — как в тренажёре.",
+    lines: [text]
+  }));
+}
+
+const textDrills = buildTextDrills(lesson);
+
+const drills = textDrills
+  ? textDrills
+  : lesson && Array.isArray(lesson.drills)
     ? lesson.drills.filter(
         (drill) => Array.isArray(drill.lines) && drill.lines.length > 0
       )
@@ -292,9 +336,17 @@ function renderMeta() {
 
   const chips = [
     { text: `≈ ${lesson.minutes} мин` },
-    { text: "Теория + практика" },
-    { text: `${drills.length} упражнения` }
+    isTextLesson
+      ? { text: "Текст из тренажёра" }
+      : { text: "Теория + практика" },
+    isTextLesson
+      ? { text: `${drills.length} отрывка` }
+      : { text: `${drills.length} упражнения` }
   ];
+
+  if (isTextLesson) {
+    chips.push({ text: "скорость в WPM", variant: "is-record" });
+  }
 
   if (isPaidLesson(lesson)) {
     chips.push({ text: "Премиум", variant: "is-paid" });
@@ -503,10 +555,22 @@ function accuracyPercent() {
     : 100;
 }
 
+function wpmNow() {
+  const seconds = elapsedMs() / 1000;
+
+  if (seconds <= 0) return 0;
+
+  return Math.round((state.correct / 5) / (seconds / 60));
+}
+
 function updateStats() {
   els.accuracy.textContent = `${accuracyPercent()}%`;
   els.errors.textContent = String(state.errors);
   els.time.textContent = formatTime(elapsedMs());
+
+  if (isTextLesson) {
+    els.speed.textContent = String(wpmNow());
+  }
 }
 
 function updateLabels() {
@@ -516,7 +580,9 @@ function updateLabels() {
 
   els.stepCounter.textContent = finished
     ? `Готово · ${drills.length} из ${drills.length}`
-    : `Шаг ${state.drillIndex + 1} из ${drills.length}`;
+    : isTextLesson
+      ? `Отрывок ${state.drillIndex + 1} из ${drills.length}`
+      : `Шаг ${state.drillIndex + 1} из ${drills.length}`;
 
   els.drillTitle.textContent = finished
     ? "Урок пройден"
@@ -528,7 +594,9 @@ function updateLabels() {
 
   els.lineCounter.textContent = finished
     ? "Все строки пройдены"
-    : `Строка ${state.lineIndex + 1} из ${drill.lines.length}`;
+    : isTextLesson
+      ? "Текст целиком"
+      : `Строка ${state.lineIndex + 1} из ${drill.lines.length}`;
 
   const doneLines = linesBefore(state.drillIndex) + state.lineIndex;
   const percent = totalLines > 0
@@ -540,7 +608,9 @@ function updateLabels() {
 
   els.restart.innerHTML = state.finished
     ? '<span aria-hidden="true">↻</span> Пройти заново'
-    : '<span aria-hidden="true">↻</span> Строка заново';
+    : isTextLesson
+      ? '<span aria-hidden="true">↻</span> Абзац заново'
+      : '<span aria-hidden="true">↻</span> Строка заново';
 }
 
 function renderTask() {
@@ -639,8 +709,9 @@ function advanceLine() {
       return;
     }
 
-    els.inputLabel.textContent =
-      "Упражнение пройдено. Дальше — новое задание.";
+    els.inputLabel.textContent = isTextLesson
+      ? "Отрывок пройден. Дальше — следующий."
+      : "Упражнение пройдено. Дальше — новое задание.";
   }
 
   loadLine();
@@ -663,7 +734,12 @@ function handleInput() {
   renderTask();
   updateStats();
 
-  if (current === state.target) advanceLine();
+  // Текстовые уроки, как тренажёр: ошибки не мешают дойти до конца.
+  const complete = isTextLesson
+    ? current.length >= state.target.length
+    : current === state.target;
+
+  if (complete) advanceLine();
 }
 
 function saveLessonResult(result) {
@@ -701,6 +777,10 @@ function renderResult(result, previous) {
   els.resultAccuracy.textContent = String(result.accuracy);
   els.resultTime.textContent = formatTime(result.timeMs);
   els.resultSpeed.textContent = String(result.speed);
+
+  els.resultSpeedLabel.textContent = isTextLesson ? "Скорость" : "Темп";
+  els.resultSpeedUnit.textContent = isTextLesson ? "WPM" : "зн/мин";
+
   els.resultErrors.textContent = String(result.errors);
 
   els.resultBadge.textContent = previous.completed
@@ -708,17 +788,19 @@ function renderResult(result, previous) {
     : "Урок пройден";
 
   if (result.accuracy >= 97) {
-    els.resultMessage.textContent =
-      "Почти идеально: пальцы уже знают, куда идти. " +
-      "Дальше можно закреплять результат в тренажёре.";
+    els.resultMessage.textContent = isTextLesson
+      ? "Отличный темп и почти идеальная точность. " +
+        "Следующий шаг — удержать WPM на более сложном тексте."
+      : "Почти идеально: пальцы уже знают, куда идти. " +
+        "Дальше можно закреплять результат в тренажёре.";
   } else if (result.accuracy >= 90) {
     els.resultMessage.textContent =
-      "Хорошая работа. Точность выше 90% — это уверенный результат " +
-      "для первого урока. Повтори его ещё раз, чтобы закрепить.";
+      "Хорошая работа. Точность выше 90% — это уверенный результат. " +
+      "Повтори урок ещё раз, чтобы закрепить.";
   } else {
     els.resultMessage.textContent =
       "Урок пройден, но точность пока ниже 90%. Это нормально: " +
-      "верни урок через день и печатай медленнее, следя за домашним рядом.";
+      "верни урок через день и печатай медленнее, следя за пальцами.";
   }
 
   const record = getLessonRecord(lesson.id);
@@ -768,12 +850,15 @@ function finishLesson() {
   els.input.disabled = true;
   els.inputLabel.textContent = "Урок пройден. Результат — ниже.";
 
+  const seconds = elapsedMs() / 1000;
+
   const result = {
     accuracy: accuracyPercent(),
     timeMs: elapsedMs(),
-    speed:
-      elapsedMs() > 0
-        ? Math.round((state.attempts / (elapsedMs() / 1000)) * 60)
+    speed: isTextLesson
+      ? wpmNow()
+      : seconds > 0
+        ? Math.round((state.attempts / seconds) * 60)
         : 0,
     errors: state.errors
   };
@@ -816,8 +901,9 @@ function restartLesson() {
 
   els.result.hidden = true;
   els.input.disabled = false;
-  els.inputLabel.textContent =
-    "Печатай строку и не смотри на клавиатуру";
+  els.inputLabel.textContent = isTextLesson
+    ? "Печатай текст и не смотри на клавиатуру"
+    : "Печатай строку и не смотри на клавиатуру";
 
   loadLine();
   els.input.focus();
@@ -897,6 +983,7 @@ function startLessonView() {
   els.paywall.hidden = true;
   els.unavailable.hidden = true;
   els.view.hidden = false;
+  els.speedStat.hidden = !isTextLesson;
 
   renderLesson();
 
@@ -907,6 +994,10 @@ function startLessonView() {
   els.input.addEventListener("input", handleInput);
   els.input.addEventListener("paste", (event) => event.preventDefault());
   els.input.addEventListener("drop", (event) => event.preventDefault());
+
+  els.inputLabel.textContent = isTextLesson
+    ? "Печатай текст и не смотри на клавиатуру"
+    : "Печатай строку и не смотри на клавиатуру";
 
   els.restart.addEventListener("click", () => {
     if (state.finished) {

@@ -2017,6 +2017,10 @@ h1 span {
   text-transform: uppercase;
 }
 
+.practice-stat[hidden] {
+  display: none;
+}
+
 .practice-stat b {
   color: var(--text);
   font-size: 16px;
